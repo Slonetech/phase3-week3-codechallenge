@@ -64,6 +64,4 @@ class Review(Base):
     restaurant = relationship('Restaurant', back_populates='reviews_relationship')
     customer = relationship('Customer', back_populates='reviews_relationship')
 
-    # Various methods to interact with Review objects
 
-# The code above defines SQLAlchemy models for a restaurant review system with relationships between Restaurant, Customer, and Review objects.
