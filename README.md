@@ -52,4 +52,4 @@ The Faker library is used to generate realistic-looking fake data. You can custo
 
 This code is intended for educational purposes and as a starting point for building a more comprehensive restaurant review system. Depending on your requirements, you may need to add more features and functionality to the system.
 
-Feel free to customize and extend this code according to your specific needs. It serves as a basic framework for building a restaurant review system, and you can expand upon it to create a fully functional application.
+Feel free to customize and extend this code according to your specific needs. It serves as a basic framework for building a restaurant review system, and you can expand upon it to create a fully functional application with a user interface.
