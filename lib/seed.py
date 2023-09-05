@@ -47,7 +47,7 @@ if __name__ == '__main__':
     for i in range(10):
         customer = Customer(
             first_name=fake.first_name(),  # Generate a fake first name
-            last_name=fake.last_name(),    # Generate a fake last name
+            last_name=fake.first_name(),    # Generate a fake last name
         )
         # Add the customer object to the session and the list
         session.add(customer)
