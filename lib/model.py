@@ -29,7 +29,20 @@ class Restaurant(Base):
         back_populates='restaurants',
         viewonly=True)
 
-    # Various methods to interact with Restaurant objects
+    def get_reviews(self):
+        return [review.star_rating for review in self.reviews_relationship]
+    
+    def get_customers(self):
+        return [customer.first_name for customer in self.customers]
+    
+    def fanciest_restaurant(self):
+        return max([review.star_rating for review in self.reviews_relationship])
+    
+    
+    def __repr__(self):
+        return f'Restaurant(name={self.name}, price={self.price})'
+    
+    
 
 # Define the Customer class with SQLAlchemy ORM
 class Customer(Base):
@@ -48,7 +61,30 @@ class Customer(Base):
         back_populates='customers',
         viewonly=True)
 
-    # Various methods to interact with Customer objects
+    def get_reviews(self):
+        return self.reviews_relationship
+    
+    def get_restaurants(self):
+        return [restaurant.name for restaurant in self.restaurants]
+    
+    def get_full_name(self):
+        return f'{self.first_name} {self.last_name}'
+    
+    def favorite_restaurant(self):
+        return max(self.get_reviews())
+    
+    # Add a method to add a review for a restaurant
+    def add_review(self, restaurant,rating):
+        new_review = Review(restaurant_id=restaurant, customer_id=self.id, star_rating=rating)
+        session.add(new_review)
+    session.commit() 
+
+    def favorite_restaurant(self):
+        return max(self.get_reviews())
+    
+   
+    def __repr__(self):
+        return f'Customer(first_name={self.first_name}, last_name={self.last_name})'
 
 # Define the Review class with SQLAlchemy ORM
 class Review(Base):
@@ -64,4 +100,34 @@ class Review(Base):
     restaurant = relationship('Restaurant', back_populates='reviews_relationship')
     customer = relationship('Customer', back_populates='reviews_relationship')
 
+    def customer_name(self):
+        return self.customer
+    
+    def full_review(self):
+        return f'{self.restaurant.name} rated by {self.customer.get_full_name()} with {self.star_rating} stars.'
+    
+    def __repr__(self):
+        return f'Review(star_rating={self.star_rating})'
+    
+# Create the 'restaurants' table in the database   {self.restaurant.name}
+Base.metadata.create_all(engine)
 
+
+
+
+
+
+customer = session.query(Customer).filter_by(id=1).first()
+print(customer.get_reviews())
+
+review = session.query(Review).filter_by(id=1).first()
+print(review.customer_name())
+
+add_review = session.query(Customer).filter_by(id=1).first()
+print(add_review.get_reviews())
+
+full_review = session.query(Review).filter_by(id=1).first()
+print(review.full_review())
+
+fanciest_restaurant = session.query(Restaurant).filter_by(id=1).first()
+print(fanciest_restaurant.fanciest_restaurant())
