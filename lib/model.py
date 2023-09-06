@@ -129,5 +129,5 @@ print(add_review.get_reviews())
 full_review = session.query(Review).filter_by(id=1).first()
 print(review.full_review())
 
-fanciest_restaurant = session.query(Restaurant).filter_by(id=1).first()
-print(fanciest_restaurant.fanciest_restaurant())
+customer = session.query(Customer).filter_by(id=1).first()
+print(customer.get_full_name())
